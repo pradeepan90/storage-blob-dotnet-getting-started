@@ -64,6 +64,7 @@ namespace BlobStorage
         private static async Task BasicStorageBlockBlobOperationsAsync()
         {
             const string ImageToUpload = "HelloWorld.png";
+            string imagePath = Path.Combine("BlobStorage", ImageToUpload);
             string containerName = ContainerPrefix + Guid.NewGuid();
 
             // Retrieve storage account information from connection string
@@ -97,7 +98,7 @@ namespace BlobStorage
             BlobClient blobClient = container.GetBlobClient(ImageToUpload);
             
             // Set the blob's content type so that the browser knows to treat it as an image.
-            await blobClient.UploadAsync(File.OpenRead(ImageToUpload));
+            await blobClient.UploadAsync(File.OpenRead(imagePath));
 
             // List all the blobs in the container.
             /// Note that the ListBlobs method is called synchronously, for the purposes of the sample. However, in a real-world
@@ -138,6 +139,7 @@ namespace BlobStorage
         private static async Task BasicStorageBlockBlobOperationsWithAccountSASAsync()
         {
             const string ImageToUpload = "HelloWorld.png";
+            string imagePath = Path.Combine("BlobStorage", ImageToUpload);
             string containerName = ContainerPrefix + Guid.NewGuid();
             BlobServiceClient blobServiceClient = Common.CreateblobServiceClientFromConnectionString();
             // Get an account SAS token.
@@ -183,7 +185,7 @@ namespace BlobStorage
                 // Upload a BlockBlob to the newly created container
                 Console.WriteLine("2. Uploading BlockBlob");
                 BlobClient blobClient = container.GetBlobClient(ImageToUpload);
-                await blobClient.UploadAsync(File.OpenRead(ImageToUpload));
+                await blobClient.UploadAsync(File.OpenRead(imagePath));
 
                 // List all the blobs in the container 
                 Console.WriteLine("3. List Blobs in Container");           

@@ -250,6 +250,22 @@ namespace BlobStorage
             // the delete operation should fail with error code 403 (Forbidden).
             await TestBlobSASAsync(adHocBlobSAS, BlobContent3);
 
+            // Create a stored access policy for the blob container so we can issue a SAS token with an identifier.
+            var identifiers = new List<BlobSignedIdentifier>
+            {
+                new BlobSignedIdentifier
+                {
+                    Id = sharedAccessPolicyName,
+                    AccessPolicy = new BlobAccessPolicy
+                    {
+                        StartsOn = DateTimeOffset.UtcNow.AddMinutes(-5),
+                        ExpiresOn = DateTimeOffset.UtcNow.AddHours(1),
+                        Permissions = "rwdlc"
+                    }
+                }
+            };
+            await container.SetAccessPolicyAsync(permissions: identifiers);
+
             // Generate a SAS URI for a blob within the container, using the stored access policy to set constraints on the SAS.
             Uri sharedPolicyBlobSAS = GetBlobSasUri(container, BlobName4, storageSharedKeyCredential, sharedAccessPolicyName);
 
@@ -368,10 +384,13 @@ namespace BlobStorage
                     Console.WriteLine("\tContainer:" + container.Name);
 
                     // Write the container's metadata keys and values.
-                    foreach (var metadataItem in container.Properties.Metadata)
+                    if (container.Properties.Metadata != null)
                     {
-                        Console.WriteLine("\t\tMetadata key: " + metadataItem.Key);
-                        Console.WriteLine("\t\tMetadata value: " + metadataItem.Value);
+                        foreach (var metadataItem in container.Properties.Metadata)
+                        {
+                            Console.WriteLine("\t\tMetadata key: " + metadataItem.Key);
+                            Console.WriteLine("\t\tMetadata value: " + metadataItem.Value);
+                        }
                     }
                 }
                 Console.WriteLine();

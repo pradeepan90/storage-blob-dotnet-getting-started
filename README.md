@@ -14,8 +14,9 @@ Demonstrates how to use the Blob Storage service.
 Blob storage stores unstructured data such as text, binary data, documents or media files.
 Blobs can be accessed from anywhere in the world via HTTP or HTTPS.
 
-Note: This sample uses the .NET Framework 4.7.2 asynchronous programming model to demonstrate how to call Azure Storage using asynchronous API calls. When used in real applications, this approach enables you to improve the
-responsiveness of your application. Calls to Azure Storage are prefixed by the `await` keyword. For more information about asynchronous programming using the Async/Await pattern, see [Asynchronous Programming with Async and Await (C# and Visual Basic)](https://msdn.microsoft.com/library/hh191443.aspx).
+Note: This sample uses .NET 8.0 and the async/await programming model to demonstrate how to call Azure Storage using asynchronous API calls. When used in real applications, this approach improves the responsiveness of your application. Calls to Azure Storage are prefixed by the `await` keyword. For more information about asynchronous programming using the Async/Await pattern, see [Asynchronous Programming with Async and Await (C# and Visual Basic)](https://msdn.microsoft.com/library/hh191443.aspx).
+
+Build the sample from the repository root with `dotnet build`.
 
 If you don't already have a Microsoft Azure subscription, you can
 get a FREE trial account [here](http://go.microsoft.com/fwlink/?LinkId=330212).
